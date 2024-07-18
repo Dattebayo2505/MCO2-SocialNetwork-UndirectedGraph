@@ -9,6 +9,8 @@ typedef char stringNames[31];
 typedef struct SequenceTag {
   stringNames vertexID;
   char neighbors[19][MAX_NAMELENGTH]; // adjacent vertices to the vertexID
+  char adjMatrixRow[MAX_VERTICES];
   int degree;
   int neighborTotal;
+
 } SequenceType;

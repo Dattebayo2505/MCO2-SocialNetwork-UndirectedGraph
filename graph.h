@@ -79,10 +79,10 @@ void getNumVertices(FILE **fp, int *numVertices) {
 }
 
 // DEBUGGING ONLY
-void printGraph(int adjMatrix[][4], int numVertices) {
+void printGraph(SequenceType vertices[], int numVertices) {
   for (int i = 0; i < numVertices; i++) {
     for (int j = 0; j < numVertices; j++) {
-      printf("%d ", adjMatrix[i][j]);
+      printf("%d ", vertices[i].adjMatrixRow[j]);
     }
     printf("\n");
   }
@@ -91,36 +91,34 @@ void printGraph(int adjMatrix[][4], int numVertices) {
 
 void createMatrix(SequenceType vertices[], int numVertices) {
   
-  int adjMatrix[numVertices][numVertices], 
-      neighborCtr = 0, i, j;
+  int neighborCtr = 0, i, j;
   
   for (i = 0; i < numVertices; i++) {
     for (j = 0; j < numVertices; j++)
-      adjMatrix[i][j] = 0;
+      vertices[i].adjMatrixRow[j] = 0;
   }
-
-  printf("\n");
-  printGraph(adjMatrix, numVertices); // DEBUGGING
 
   for (i=0; i<numVertices; i++) {
     vertices[i].degree = 0;
 
     for (j=0; j<numVertices; j++) {
       while (strcmp(vertices[i].neighbors[neighborCtr], vertices[j].vertexID) == 0
-             && vertices[i].neighborTotal > neighborCtr) {// only works when names are alphabetical
+             && vertices[i].neighborTotal > neighborCtr) { // only works when names are alphabetical (WILL FIX SOON)
+        // adjMatrix[i][j] = 1; // debugging
+        vertices[i].adjMatrixRow[j] = 1;
         ++vertices[i].degree;
         ++neighborCtr;
-        adjMatrix[i][j] = 1; // DEBUGGING
       }
     }
     neighborCtr = 0; 
   }
 
-  printGraph(adjMatrix, numVertices); // DEBUGGING
+  printGraph(vertices, numVertices); // DEBUGGING
 }
 
 int longestString(SequenceType vertices[], int numVertices) {
   int currentLength, maxLength = 0, i;
+
   for (i=0; i<numVertices; i++) {
     currentLength = strlen(vertices[i].vertexID);
     if (currentLength > maxLength) {

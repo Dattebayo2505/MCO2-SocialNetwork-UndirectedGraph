@@ -6,7 +6,7 @@
 
 int main() {
 	FILE *fp;
-	int numVertices, startingIndex;
+	int numVertices, startingIndexVertex;
 
 	getNumVertices(&fp, &numVertices);
 
@@ -14,15 +14,14 @@ int main() {
 
 	readInput(&fp, vertices, numVertices);
 
-	startingIndex = startIndex(vertices, numVertices);
+	startingIndexVertex = startIndex(vertices, numVertices);
 
-	createMatrix(vertices, numVertices); // DEBUGGING
+	createMatrix(vertices, numVertices);
 	printVertexDegrees(&fp, vertices, numVertices);
 
-
-	if (startingIndex != -1) {
-		// BFS(startingIndex);
-		// DFS(startingIndex);
+	if (startingIndexVertex != -1) {
+		// BFS(startingIndexVertex, adjMatrix);
+		// DFS(startingIndexVertex, adjMatrix);
 	}
   
   return 0;
