@@ -11,7 +11,7 @@ void readInput(FILE **fp, SequenceType vertices[], int numVertices) {
   int fScanfResult = 0,
       vertexIDCtr = 0, 
       neighborCtr = 0;
-      
+
   while(fScanfResult != EOF) {
     fScanfResult = fscanf(*fp, "%s", temp);
 
@@ -67,7 +67,7 @@ void getNumVertices(FILE **fp, int *numVertices) {
 
   printf("Input filename: ");
   // scanf("%s", filename); // Un-comment out
-  printf("GRAPH.txt\n"); strcpy(filename, "GRAPH.txt"); // DEBUGGING
+  printf("GRAPH.txt\n"); strcpy(filename, "TEST.txt"); // DEBUGGING
   *fp = fopen(filename, "r");
 
   if (*fp == NULL) {
@@ -80,8 +80,8 @@ void getNumVertices(FILE **fp, int *numVertices) {
 
 // DEBUGGING ONLY
 void printGraph(SequenceType vertices[], int numVertices) {
-  for (int i = 0; i < numVertices; i++) {
-    for (int j = 0; j < numVertices; j++) {
+  for (int i = 0; i < 19; i++) {
+    for (int j = 0; j < 19; j++) {
       printf("%d ", vertices[i].adjMatrixRow[j]);
     }
     printf("\n");
@@ -90,9 +90,9 @@ void printGraph(SequenceType vertices[], int numVertices) {
 }
 
 void createMatrix(SequenceType vertices[], int numVertices) {
-  
+
   int neighborCtr = 0, i, j;
-  
+
   for (i = 0; i < numVertices; i++) {
     for (j = 0; j < numVertices; j++)
       vertices[i].adjMatrixRow[j] = 0;
@@ -130,7 +130,7 @@ int longestString(SequenceType vertices[], int numVertices) {
 
 void printVertexDegrees(FILE **fp, SequenceType vertices[], int numVertices) {
   int i, padding;
-  
+
   *fp = fopen("TRAVERSALS.txt", "w");
 
   padding = longestString(vertices, numVertices) + 3; // Aesthetics

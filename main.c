@@ -1,28 +1,36 @@
 // 2024-07-14 Started Initial
 
 #include <stdio.h>
+
 #include "header.h"
 #include "graph.h"
+#include "traversals.h"
 
 int main() {
-	FILE *fp;
-	int numVertices, startingIndexVertex;
+  FILE *fp;
+  int numVertices, startingIndexVertex;
+  int visited[MAX_VERTICES] = {0};
 
-	getNumVertices(&fp, &numVertices);
+  getNumVertices(&fp, &numVertices);
 
-	SequenceType vertices[numVertices];
+  SequenceType vertices[numVertices];
+  SequenceType vertex;
 
-	readInput(&fp, vertices, numVertices);
+  readInput(&fp, vertices, numVertices);
 
-	startingIndexVertex = startIndex(vertices, numVertices);
+  startingIndexVertex = startIndex(vertices, numVertices);
 
-	createMatrix(vertices, numVertices);
-	printVertexDegrees(&fp, vertices, numVertices);
+  int adjMatrix[numVertices][numVertices];
+  //getAdjMatrixFromMatrixRow(vertex, adjMatrix, numVertices);
+  createMatrix(vertices, numVertices); // vertices[] is already populated atp
+  printVertexDegrees(&fp, vertices, numVertices);
 
-	if (startingIndexVertex != -1) {
-		// BFS(startingIndexVertex, adjMatrix);
-		// DFS(startingIndexVertex, adjMatrix);
-	}
-  
+  if (startingIndexVertex != -1) {
+    // BFS(startingIndexVertex, adjMatrix);
+    
+    printf("\n");
+    DFS(startingIndexVertex, vertices, numVertices, visited);
+  }
+
   return 0;
 }
