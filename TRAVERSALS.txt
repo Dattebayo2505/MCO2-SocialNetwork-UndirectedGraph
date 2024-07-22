@@ -1,4 +1,5 @@
-Bruce    1
-Clark    2
-Diana    3
-Hal      2
+Flo       4
+Keisha    4
+Meg       3
+Santi     3
+SK        4

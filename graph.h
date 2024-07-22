@@ -43,7 +43,7 @@ int isValidName(SequenceType vertices[], int numVertices, char inputName[]) {
     if (strcmp(vertices[i].vertexID, inputName) == 0)
       return i;
   }
-  return 0;
+  return -1;
 }
 
 int startIndex(SequenceType vertices[], int numVertices) {
@@ -54,7 +54,7 @@ int startIndex(SequenceType vertices[], int numVertices) {
     scanf("%s", startVertex);
 
     indexVertex = isValidName(vertices, numVertices, startVertex);
-    if (!indexVertex) {
+    if (indexVertex == -1) {
       printf("Vertex %s not found.\n", startVertex);
       return -1;
     }
@@ -67,7 +67,7 @@ void getNumVertices(FILE **fp, int *numVertices) {
 
   printf("Input filename: ");
   // scanf("%s", filename); // Un-comment out
-  printf("GRAPH.txt\n"); strcpy(filename, "TEST.txt"); // DEBUGGING
+  printf("GRAPH2.txt\n"); strcpy(filename, "GRAPH2.txt"); // DEBUGGING
   *fp = fopen(filename, "r");
 
   if (*fp == NULL) {
@@ -80,8 +80,8 @@ void getNumVertices(FILE **fp, int *numVertices) {
 
 // DEBUGGING ONLY
 void printGraph(SequenceType vertices[], int numVertices) {
-  for (int i = 0; i < 19; i++) {
-    for (int j = 0; j < 19; j++) {
+  for (int i=0; i<numVertices; i++) {
+    for (int j=0; j<numVertices; j++) {
       printf("%d ", vertices[i].adjMatrixRow[j]);
     }
     printf("\n");
@@ -142,3 +142,25 @@ void printVertexDegrees(FILE **fp, SequenceType vertices[], int numVertices) {
 
   fclose(*fp);
 }
+
+// void printTraversalsToFile(FILE **fp, SequenceType vertices[], int numVertices, char bfsSequence[][MAX_NAMELENGTH], char dfsSequence[][MAX_NAMELENGTH])
+// {
+//   int i, j;
+//   *fp = fopen("TRAVERSALS.txt", "a");
+
+//   // fprintf(*fp, "\n");
+//   // for (i = 0; i < numVertices; i++){
+//   //   if (i == numVertices - 1) {
+//   //     fprintf(*fp, "%s", bfsSequence[i]);
+//   //   }
+//   //   else
+//   //     fprintf(*fp, "%s ", bfsSequence[i]);
+//   // }
+
+//   // DFS
+//   fprintf(*fp, "\n");
+//   for (j = 0; j < numVertices; j++) {
+//     fprintf(*fp, "%s ", dfsSequence[j]);
+//   }
+//   fclose(*fp);
+// }
