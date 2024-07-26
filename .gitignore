@@ -50,3 +50,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+#
+Graphviz-12.0.0-win64/
+.vscode/

@@ -1,5 +1,12 @@
-Flo       4
-Keisha    4
-Meg       3
-Santi     3
-SK        4
+Laurie    1
+Freda     4
+Rufus     1
+Larry     2
+Ron       2
+Brandi    2
+Amy       3
+Magda     1
+
+Magda Amy Freda Ron Brandi Larry Laurie Rufus 
+
+Magda Amy Freda Brandi Larry Laurie Ron Rufus 

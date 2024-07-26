@@ -9,31 +9,43 @@
 int main() {
   FILE *fp;
   int numVertices, startingIndexVertex;
-  int visitedBFS[MAX_VERTICES] = {0}; // idk if need iseparate yung visited array -meg
+  int visitedBFS[MAX_VERTICES] = {0};
   int visitedDFS[MAX_VERTICES] = {0};
+  stringNames temp = {};
 
   getNumVertices(&fp, &numVertices);
 
   SequenceType vertices[numVertices];
   char bfsSequence[numVertices][MAX_NAMELENGTH];
-  char dfsSequence[numVertices][MAX_NAMELENGTH]; // stores the names of vertices visited in the order of DFS traversal
+  char dfsSequence[numVertices][MAX_NAMELENGTH];
 
   readInput(&fp, vertices, numVertices);
 
-  startingIndexVertex = startIndex(vertices, numVertices);
+  startingIndexVertex = startIndex(vertices, numVertices); 
+  strcpy(temp, vertices[startingIndexVertex].vertexID); // For rearrangement later
 
-  createMatrix(vertices, numVertices);
+  sortVertices(vertices, numVertices);
+
+  createAdjMatrix(vertices, numVertices);
   printVertexDegrees(&fp, vertices, numVertices);
+
+
+  for (int i = 0; i < numVertices; i++) {
+    if (strcmp(temp, vertices[i].vertexID) == 0) {
+      startingIndexVertex = i;
+      break;
+    }
+  }
 
   if (startingIndexVertex != -1) {
     printf("\n");
-    BFS(startingIndexVertex, vertices, numVertices, visitedBFS);
+    BFS(startingIndexVertex, vertices, numVertices, visitedBFS, bfsSequence);
 
     printf("\n");
     DFS(startingIndexVertex, vertices, numVertices, visitedDFS, dfsSequence);
+
+    printTraversalsToFile(&fp, vertices, numVertices, bfsSequence, dfsSequence);
   }
-  
- // printTraversalsToFile(&fp, vertices, numVertices, dfsSequence, bfsSequence);
 
   return 0;
 }
