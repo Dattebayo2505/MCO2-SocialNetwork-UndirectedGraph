@@ -5,8 +5,10 @@
 typedef char stringNames[31];
 
 typedef struct SequenceTag {
-  stringNames vertexID;
+  stringNames vertexID; // temp (lowercase) used always throughout the program
+  stringNames originalVertexID; // uppercase version for printing to file
   char neighbors[MAX_VERTICES][MAX_NAMELENGTH]; // adjacent vertices to the vertexID
+  char originalNeighbors[MAX_VERTICES][MAX_NAMELENGTH]; // uppercase version for printing to file
   char adjMatrixRow[MAX_VERTICES];
   int degree;
   int neighborTotal;

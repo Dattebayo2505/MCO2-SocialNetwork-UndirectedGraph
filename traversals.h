@@ -16,8 +16,8 @@ void DFS(int vertex, SequenceType vertices[], int numVertices, int visited[], ch
 
   visited[vertex] = 1; // mark vertex as visited
 
-  printf("%s ", vertices[vertex].vertexID);
-  strcpy(dfsSequence[tempIndex], vertices[vertex].vertexID); // store in string array for printing to file
+  printf("%s ", vertices[vertex].originalVertexID);
+  strcpy(dfsSequence[tempIndex], vertices[vertex].originalVertexID); // store in string array for printing to file
   tempIndex++;
 
   for (i=0; i<numVertices; i++) {
@@ -47,9 +47,9 @@ void BFS(int vertex, SequenceType vertices[], int numVertices, int visited[], ch
 
   while (front < rear) {
     currentVertex = queue[front++];
-    printf("%s ", vertices[currentVertex].vertexID);
+    printf("%s ", vertices[currentVertex].originalVertexID);
     if (bfsIndex < MAX_VERTICES) { // Ensure we don't exceed bounds of bfsSequence
-      strcpy(bfsSequence[bfsIndex++], vertices[currentVertex].vertexID); // Use bfsIndex instead of front
+      strcpy(bfsSequence[bfsIndex++], vertices[currentVertex].originalVertexID); // Use bfsIndex instead of front
     }
 
     // Enqueue all adjacent, unvisited vertices

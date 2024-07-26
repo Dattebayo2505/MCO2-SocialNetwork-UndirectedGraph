@@ -24,7 +24,7 @@ void resetArray(char input[], int size) {
  */
 void toLowerCase(char str[]){
   int i;
-  for (i=0; str[i]; i++){
+  for (i=0; str[i]!='\0'; i++){
     str[i] = tolower(str[i]);
   }
 }
@@ -43,7 +43,7 @@ void getNumVertices(FILE **fp, int *numVertices) {
   char filename[MAX_FILENAME_LENGTH];
 
   printf("Input filename: ");
-  scanf("%s", filename); // Un-comment out
+  // scanf("%s", filename); // Un-comment out for final
   printf("GRAPH.txt\n"); strcpy(filename, "GRAPH.txt"); // DEBUGGING
   *fp = fopen(filename, "r");
 
@@ -68,15 +68,15 @@ void sortNeighbors(char neighbors[][MAX_NAMELENGTH], int neighborTotal) {
   int i, j;
   char key[MAX_NAMELENGTH];
 
-  for (i = 1; i < neighborTotal; i++){
+  for (i=1; i<neighborTotal; i++) {
       strcpy(key, neighbors[i]);
       j = i -1;
 
-        while (j >= 0 && strcmp(neighbors[j], key) > 0){
-          strcpy(neighbors[j + 1], neighbors[j]);
-          j--;
+      while (j>=0 && strcmp(neighbors[j], key) > 0){
+        strcpy(neighbors[j+1], neighbors[j]);
+        j--;
     }
-    strcpy(neighbors[j + 1], key);
+    strcpy(neighbors[j+1], key);
   }
 }
 
@@ -105,10 +105,10 @@ void swapSequenceType(SequenceType *a, SequenceType *b) {
 void sortVertices(SequenceType vertices[], int numVertices) {
   int i, j;
 
-  for (i = 1; i < numVertices; i++) {
+  for (i=1; i<numVertices; i++) {
     j = i - 1;
-    while (j >= 0 && strcmp(vertices[j].vertexID, vertices[j + 1].vertexID) > 0) {
-      swapSequenceType(&vertices[j], &vertices[j + 1]);
+    while (j>=0 && strcmp(vertices[j].vertexID, vertices[j+1].vertexID) > 0) {
+      swapSequenceType(&vertices[j], &vertices[j+1]);
       j--;
     }
   }
@@ -133,14 +133,18 @@ void readInput(FILE **fp, SequenceType vertices[], int numVertices) {
   while(fScanfResult != EOF) {
     fScanfResult = fscanf(*fp, "%s", temp);
 
-    if (strcmp(temp, "-1") != 0)
+    if (strcmp(temp, "-1") != 0) {
+      strcpy(vertices[vertexIDCtr].originalVertexID, temp);
+      toLowerCase(temp); // Convert vertexID to lowercase
       strcpy(vertices[vertexIDCtr].vertexID, temp);
-
+    }
     while (strcmp(temp, "-1") != 0 && fScanfResult != EOF) {
       fScanfResult = fscanf(*fp, "%s", temp);
 
       if (strcmp(temp, "-1") != 0 && fScanfResult != EOF) {
-        strncpy(vertices[vertexIDCtr].neighbors[neighborCtr], temp, MAX_NAMELENGTH - 1);
+        strncpy(vertices[vertexIDCtr].originalNeighbors[neighborCtr], temp, MAX_NAMELENGTH-1);
+        toLowerCase(temp); // Convert neighbor to lowercase
+        strncpy(vertices[vertexIDCtr].neighbors[neighborCtr], temp, MAX_NAMELENGTH-1);
         neighborCtr++;
       }
     }
@@ -331,8 +335,8 @@ void printVertexDegrees(FILE **fp, SequenceType vertices[], int numVertices) {
 
   for (i=0; i<numVertices; i++) {
     original = print(vertices, numVertices);
-    printf("%-*s %d\n", padding, vertices[original].vertexID, vertices[original].degree); // DEBUGGING
-    fprintf(*fp, "%-*s %d\n", padding, vertices[original].vertexID, vertices[original].degree);
+    printf("%-*s %d\n", padding, vertices[original].originalVertexID, vertices[original].degree); // DEBUGGING
+    fprintf(*fp, "%-*s %d\n", padding, vertices[original].originalVertexID, vertices[original].degree);
   }
 
   fclose(*fp);
