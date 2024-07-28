@@ -1,8 +1,12 @@
-Bruce    1
-Clark    2
-Diana    3
-Hal      2
+Laurie    1
+Freda     4
+Rufus     1
+Larry     2
+Ron       2
+Brandi    2
+Amy       3
+Magda     1
 
-Clark Diana Hal Bruce 
+Magda Amy Freda Ron Brandi Larry Laurie Rufus 
 
-Clark Diana Bruce Hal 
+Magda Amy Freda Brandi Larry Laurie Ron Rufus 

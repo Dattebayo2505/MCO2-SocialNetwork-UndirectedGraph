@@ -1,14 +1,13 @@
-// 2024-07-14 Started Initial
-
 #include <stdio.h>
+#include <string.h>
 
 #include "header.h"
-#include "graph.h"
-#include "traversals.h"
+#include "graph.c"
+#include "traversals.c"
 
 int main() {
   FILE *fp;
-  int numVertices, startingIndexVertex;
+  int numVertices, startingIndexVertex, i;
   int visitedBFS[MAX_VERTICES] = {0};
   int visitedDFS[MAX_VERTICES] = {0};
   stringNames temp = {};
@@ -21,27 +20,18 @@ int main() {
 
   readInput(&fp, vertices, numVertices);
 
-  startingIndexVertex = startIndex(vertices, numVertices); 
-  strcpy(temp, vertices[startingIndexVertex].vertexID); // For rearrangement later
+  startingIndexVertex = startIndex(vertices, numVertices);
+  strcpy(temp, vertices[startingIndexVertex].vertexID); // For rearrangement later since made alphabetical
 
   sortVertices(vertices, numVertices);
 
   createAdjMatrix(vertices, numVertices);
   printVertexDegrees(&fp, vertices, numVertices);
 
-
-  for (int i = 0; i < numVertices; i++) {
-    if (strcmp(temp, vertices[i].vertexID) == 0) {
-      startingIndexVertex = i;
-      break;
-    }
-  }
+  reSortStartVertexIndex(vertices, temp, numVertices, &startingIndexVertex); // Rearrange vertices to original order
 
   if (startingIndexVertex != -1) {
-    printf("\n");
     BFS(startingIndexVertex, vertices, numVertices, visitedBFS, bfsSequence);
-
-    printf("\n");
     DFS(startingIndexVertex, vertices, numVertices, visitedDFS, dfsSequence);
 
     printTraversalsToFile(&fp, vertices, numVertices, bfsSequence, dfsSequence);
